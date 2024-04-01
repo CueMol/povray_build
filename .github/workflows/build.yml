@@ -2,7 +2,7 @@ name: Build
 
 on:
   pull_request:
-    types: [push]
+    types: [push, deployment]
 #    types: [ready_for_review, synchronize]
 
 env:
