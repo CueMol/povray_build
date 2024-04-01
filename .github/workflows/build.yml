@@ -24,7 +24,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         bash macos/run_build_libpng12.sh $HOME
         pwd
-        ls -la $HOME
+        ls -la $HOME/povray_bundle
 
     - name: Install boost
       shell: bash
@@ -32,5 +32,5 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         bash macos/run_build_boost.sh $HOME
         pwd
-        ls -la $HOME
+        ls -la $HOME/povray_bundle
 

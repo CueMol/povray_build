@@ -1,8 +1,8 @@
 #!/bin/sh
-
 set -eux
 
-TMPDIR=$HOME/tmp/tmp
+BASEDIR=$1
+TMPDIR=$BASEDIR/tmp
 
 mkdir -p $TMPDIR
 cd $TMPDIR
@@ -17,7 +17,7 @@ bash bootstrap.sh
 
 #####
 
-instpath=$HOME/proj64/povray_bundle/boost_1_76_static
+instpath=$BASEDIR/povray_bundle/boost_1_76_static
 
 ./b2 \
  --prefix=$instpath \
@@ -28,9 +28,10 @@ instpath=$HOME/proj64/povray_bundle/boost_1_76_static
  --with-thread \
  --with-chrono \
  --with-timer \
+ -d0 \
 link=static threading=multi install
 
 #####
 
 cd ..
-rm -rf boost_1_76_0
+# rm -rf boost_1_76_0
