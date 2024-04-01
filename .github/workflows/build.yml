@@ -22,6 +22,15 @@ jobs:
       shell: bash
       run: |
         cd ${GITHUB_WORKSPACE}
-        bash macos/run_config_libpng12.sh $HOME
+        bash macos/run_build_libpng12.sh $HOME
         pwd
-        ls -la
+        ls -la $HOME
+
+    - name: Install boost
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash macos/run_build_boost.sh $HOME
+        pwd
+        ls -la $HOME
+
