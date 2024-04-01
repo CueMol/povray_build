@@ -24,8 +24,8 @@ instpath=$BASEDIR/povray_bundle
     NON_REDISTRIBUTABLE_BUILD=yes \
     COMPILED_BY="your name <email@address>" \
     --prefix=$instpath \
-    --with-boost=$HOME/proj64/povray_bundle/boost_1_76_static \
-    --with-libpng=$HOME/proj64/povray_bundle/libpng12/lib \
+    --with-boost=$BASEDIR/povray_bundle/boost_1_76_static \
+    --with-libpng=$BASEDIR/povray_bundle/libpng12/lib \
     --without-libjpeg \
     --without-libtiff
 
