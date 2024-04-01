@@ -16,7 +16,7 @@ jobs:
     - name: Install prerequisites
       run: |
         brew install automake
-        brew list
+        # brew list
 
     - uses: actions/checkout@v4
 
@@ -44,10 +44,16 @@ jobs:
         pwd
         ls -la $HOME/povray_bundle
 
-    # - name: Upload artifact
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: dist-without-markdown
-    #       path: |
-    #         dist
-    #         !dist/**/*.md
+    - name: Run povray
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        ls -la $HOME/povray_bundle/povray/bin
+        $HOME/povray_bundle/povray/bin
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: povray_bundle
+        path: |
+          $HOME/povray_bundle/povray
