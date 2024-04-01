@@ -1,8 +1,10 @@
 name: Build
 
 on:
-  pull_request:
-    types: [push, deployment]
+  push:
+    branches:
+      - main
+#  pull_request:
 #    types: [ready_for_review, synchronize]
 
 env:
