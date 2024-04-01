@@ -1,0 +1,24 @@
+name: Build
+
+on:
+  pull_request:
+    types: [push]
+#    types: [ready_for_review, synchronize]
+
+env:
+  PYTHON_VERSION: 3.8
+
+jobs:
+  build_mac:
+    name: "MacOS Latest clang"
+    runs-on: macos-latest
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Install libpng
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        pwd
+        ls -la
