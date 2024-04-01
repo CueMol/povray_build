@@ -34,3 +34,11 @@ jobs:
         pwd
         ls -la $HOME/povray_bundle
 
+    - name: Build povray
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash macos/run_build_povray.sh $HOME
+        pwd
+        ls -la $HOME/povray_bundle
+

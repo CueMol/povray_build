@@ -8,7 +8,7 @@ mkdir -p $TMPDIR
 cd $TMPDIR
 
 # get source
-wget https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2
+wget --progress=dot:giga https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2
 # cp $HOME/src/boost_1_76_0.tar.bz2 .
 
 tar xzf boost_1_76_0.tar.bz2
