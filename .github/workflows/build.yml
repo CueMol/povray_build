@@ -16,6 +16,11 @@ jobs:
     runs-on: macos-latest
     steps:
 
+    - name: Install prerequisites
+      run: |
+        brew install automake
+        brew list
+
     - uses: actions/checkout@v4
 
     - name: Install libpng
@@ -42,3 +47,10 @@ jobs:
         pwd
         ls -la $HOME/povray_bundle
 
+    # - name: Upload artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: dist-without-markdown
+    #       path: |
+    #         dist
+    #         !dist/**/*.md

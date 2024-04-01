@@ -8,7 +8,8 @@ mkdir -p $TMPDIR
 cd $TMPDIR
 
 # get source
-wget -c --content-disposition https://github.com/POV-Ray/povray/archive/refs/tags/v3.7.0.10.tar.gz
+wget --progress=dot:mega -c --content-disposition \
+     https://github.com/POV-Ray/povray/archive/refs/tags/v3.7.0.10.tar.gz
 
 tar xzf povray-3.7.0.10.tar.gz
 cd povray-3.7.0.10
