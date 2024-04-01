@@ -1,7 +1,8 @@
 #!/bin/bash
 set -eux
 
-TMPDIR=$HOME/tmp/tmp
+BASEDIR=$1
+TMPDIR=$BASEDIR/tmp
 
 mkdir -p $TMPDIR
 cd $TMPDIR
@@ -15,7 +16,7 @@ cd libpng-1.2.59
 ##########
 
 ./configure \
-    --prefix=$HOME/proj64/povray_bundle/libpng12 \
+    --prefix=$BASEDIR/povray_bundle/libpng12 \
     --disable-shared
 
 ##########
@@ -23,4 +24,4 @@ cd libpng-1.2.59
 make -j 8
 make install
 cd ..
-rm -rf libpng-1.2.59
+# rm -rf libpng-1.2.59

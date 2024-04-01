@@ -22,5 +22,6 @@ jobs:
       shell: bash
       run: |
         cd ${GITHUB_WORKSPACE}
+        bash macos/run_config_libpng12.sh $HOME
         pwd
         ls -la
