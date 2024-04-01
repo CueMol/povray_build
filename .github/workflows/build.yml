@@ -9,8 +9,8 @@ on:
 
 jobs:
   build_mac:
-    name: "MacOS Latest clang"
-    runs-on: macos-latest
+    name: "MacOS 12 intel clang"
+    runs-on: macos-12
     steps:
 
     - name: Install prerequisites
@@ -49,11 +49,61 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}
         ls -la $HOME/povray_bundle/bin
-        $HOME/povray_bundle/bin
+        $HOME/povray_bundle/bin/povray
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: povray_bundle
+        name: povray_bundle_macos_intel
+        path: |
+          $HOME/povray_bundle/povray
+
+  build_mac:
+    name: "MacOS 14 arm64 clang"
+    runs-on: macos-14
+    steps:
+
+    - name: Install prerequisites
+      run: |
+        brew install automake
+        # brew list
+
+    - uses: actions/checkout@v4
+
+    - name: Install boost
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash macos/run_build_boost.sh $HOME
+        pwd
+        ls -la $HOME/povray_bundle/boost_1_76_static/lib
+
+    - name: Install libpng
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash macos/run_build_libpng12.sh $HOME
+        pwd
+        ls -la $HOME/povray_bundle
+
+    - name: Build povray
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash macos/run_build_povray.sh $HOME
+        pwd
+        ls -la $HOME/povray_bundle
+
+    - name: Run povray
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        ls -la $HOME/povray_bundle/bin
+        $HOME/povray_bundle/bin/povray
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: povray_bundle_macos_arm64
         path: |
           $HOME/povray_bundle/povray
