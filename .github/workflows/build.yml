@@ -115,3 +115,26 @@ jobs:
         path: |
           povray_bundle/bin
           povray_bundle/share
+
+###############################################
+
+  build_linux_intel:
+    name: "Linux intel gcc"
+    runs-on: ubuntu-22.04
+    steps:
+
+    - name: Install prerequisites
+      run: |
+        which automake
+        # brew list
+
+    - uses: actions/checkout@v4
+
+    - name: Install libpng
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash macos/run_build_libpng12.sh $HOME
+        pwd
+        ls -la $HOME/povray_bundle
+
