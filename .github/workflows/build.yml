@@ -130,6 +130,14 @@ jobs:
 
     - uses: actions/checkout@v4
 
+    - name: Install boost
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash linux/run_build_boost.sh $HOME
+        pwd
+        ls -la $HOME/povray_bundle/boost_1_76_static/lib
+
     - name: Install libpng
       shell: bash
       run: |
