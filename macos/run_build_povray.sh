@@ -33,7 +33,7 @@ instpath=$BASEDIR/povray_bundle
     --without-libjpeg \
     --without-libtiff
 
-make -j 8
+env MACOSX_DEPLOYMENT_TARGET=10.15 make -j 8
 make install
 
 # cd ..
