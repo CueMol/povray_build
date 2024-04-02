@@ -45,11 +45,12 @@ jobs:
         ls -la $HOME/povray_bundle
         cp -r $HOME/povray_bundle ${GITHUB_WORKSPACE}
 
-    - name: Run povray
+    - name: Check build
       shell: bash
       run: |
         cd ${GITHUB_WORKSPACE}
         ls -la $HOME/povray_bundle/bin
+        otool -L $HOME/povray_bundle/bin/povray
         $HOME/povray_bundle/bin/povray -h
 
     - name: Upload artifact
@@ -99,11 +100,12 @@ jobs:
         ls -la $HOME/povray_bundle
         cp -r $HOME/povray_bundle ${GITHUB_WORKSPACE}
 
-    - name: Run povray
+    - name: Check build
       shell: bash
       run: |
         cd ${GITHUB_WORKSPACE}
         ls -la $HOME/povray_bundle/bin
+        otool -L $HOME/povray_bundle/bin/povray
         $HOME/povray_bundle/bin/povray -h
 
     - name: Upload artifact
