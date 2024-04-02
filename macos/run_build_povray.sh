@@ -26,6 +26,7 @@ instpath=$BASEDIR/povray_bundle
     --prefix=$instpath \
     --with-boost=$BASEDIR/povray_bundle/boost_1_76_static \
     --with-libpng=$BASEDIR/povray_bundle/libpng12/lib \
+    --without-x \
     --without-openexr \
     --without-libmkl \
     --without-libsdl \
