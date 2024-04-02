@@ -10,7 +10,7 @@ cd $TMPDIR
 # get source
 wget --content-disposition -c https://sourceforge.net/projects/libpng/files/libpng12/1.2.59/libpng-1.2.59.tar.xz
 
-tar xjf libpng-1.2.59.tar.xz
+tar Jxf libpng-1.2.59.tar.xz
 cd libpng-1.2.59
 
 ##########
