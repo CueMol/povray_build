@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+jobs:
   release_linux_intel:
     name: "Linux intel gcc"
     runs-on: ubuntu-22.04
