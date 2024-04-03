@@ -1,15 +1,23 @@
-$BASEDIR = $args[0]
-Write-Host "BASEDIR=" $BASEDIR
-msbuild -version
-
 sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
 gal wget
+
+$BASEDIR = $args[0]
+Write-Host "BASEDIR=" $BASEDIR
+$TMPDIR = $BASEDIR/tmp
+
+New-Item $TMPDIR -ItemType Directory -ErrorAction SilentlyContinue
+Set-Location -Path $TMPDIR
 
 # get source
 wget --progress=dot:mega -c --content-disposition https://github.com/POV-Ray/povray/archive/refs/tags/v3.7.0.10.tar.gz
 
+tar xzf povray-3.7.0.10.tar.gz
+Set-Location -Path ./povray-3.7.0.10
+Get-ChildItem ./
+
+msbuild -version
+
 <#
-TMPDIR=$BASEDIR/tmp
 
 mkdir -p $TMPDIR
 cd $TMPDIR
