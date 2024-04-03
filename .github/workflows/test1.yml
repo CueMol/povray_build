@@ -1,0 +1,25 @@
+name: Release test 1
+
+on:
+  push:
+    branches:
+      - main
+
+  release_linux_intel:
+    name: "Linux intel gcc"
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Create file
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        echo "XXX" > test_file
+        chmod +x test_file
+        tar cjvf my_files.tar.bz2 test_file
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: test_file_linux_intel
+        path: |
+          test_file_linux_intel.tar.bz2
