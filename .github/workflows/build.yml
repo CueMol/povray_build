@@ -1,11 +1,11 @@
 name: Build and release
 
-# on:
-#   push:
-#     branches:
-#       - main
-#     tags:
-#       - "v*.*.*"
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
 
 #  pull_request:
 #    types: [ready_for_review, synchronize]
@@ -42,6 +42,7 @@ jobs:
     - name: Build povray
       shell: bash
       run: |
+        cd ${GITHUB_WORKSPACE}
         bash macos/run_build_povray.sh $HOME
 
     - name: Check build
@@ -54,6 +55,8 @@ jobs:
 
     - name: Create bundle
       shell: bash
+      env:
+        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       run: |
         OUTPUT_DIR=${GITHUB_WORKSPACE}/povray
         cd ${GITHUB_WORKSPACE}
@@ -62,14 +65,15 @@ jobs:
         ls -la $HOME/povray_bundle
         cp -v $HOME/povray_bundle/bin/* ${OUTPUT_DIR}/bin/
         cp -v $HOME/povray_bundle/share/povray-*/include/* ${OUTPUT_DIR}/include
-        tar cjf povray_bundle.tar.bz2 povray
+        tar cjf ${{ env.ARTIFACT_NAME }} povray
 
     - name: Upload artifact
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       uses: actions/upload-artifact@v4
       with:
         name: povray_bundle_macos_intel
-        path: |
-          povray_bundle.tar.bz2
+        path: ${{ env.ARTIFACT_NAME }}
 
 ###############################################
 
@@ -106,9 +110,6 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}
         bash macos/run_build_povray.sh $HOME
-        pwd
-        ls -la $HOME/povray_bundle
-        cp -r $HOME/povray_bundle ${GITHUB_WORKSPACE}
 
     - name: Check build
       shell: bash
@@ -118,13 +119,27 @@ jobs:
         otool -L $HOME/povray_bundle/bin/povray
         $HOME/povray_bundle/bin/povray -h
 
+    - name: Create bundle
+      shell: bash
+      env:
+        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+      run: |
+        OUTPUT_DIR=${GITHUB_WORKSPACE}/povray
+        cd ${GITHUB_WORKSPACE}
+        mkdir -p ${OUTPUT_DIR}/bin
+        mkdir -p ${OUTPUT_DIR}/include
+        ls -la $HOME/povray_bundle
+        cp -v $HOME/povray_bundle/bin/* ${OUTPUT_DIR}/bin/
+        cp -v $HOME/povray_bundle/share/povray-*/include/* ${OUTPUT_DIR}/include
+        tar cjf ${{ env.ARTIFACT_NAME }} povray
+
     - name: Upload artifact
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       uses: actions/upload-artifact@v4
       with:
         name: povray_bundle_macos_arm64
-        path: |
-          povray_bundle/bin
-          povray_bundle/share
+        path: ${{ env.ARTIFACT_NAME }}
 
 ###############################################
 
@@ -136,7 +151,7 @@ jobs:
     - name: Install prerequisites
       run: |
         which automake
-        # brew list
+        automake --version
 
     - uses: actions/checkout@v4
 
@@ -161,9 +176,6 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}
         bash linux/run_build_povray.sh $HOME
-        pwd
-        ls -la $HOME/povray_bundle
-        cp -r $HOME/povray_bundle ${GITHUB_WORKSPACE}
 
     - name: Check build
       shell: bash
@@ -173,13 +185,27 @@ jobs:
         ldd $HOME/povray_bundle/bin/povray
         $HOME/povray_bundle/bin/povray -h
 
+    - name: Create bundle
+      shell: bash
+      env:
+        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+      run: |
+        OUTPUT_DIR=${GITHUB_WORKSPACE}/povray
+        cd ${GITHUB_WORKSPACE}
+        mkdir -p ${OUTPUT_DIR}/bin
+        mkdir -p ${OUTPUT_DIR}/include
+        ls -la $HOME/povray_bundle
+        cp -v $HOME/povray_bundle/bin/* ${OUTPUT_DIR}/bin/
+        cp -v $HOME/povray_bundle/share/povray-*/include/* ${OUTPUT_DIR}/include
+        tar cjf ${{ env.ARTIFACT_NAME }} povray
+
     - name: Upload artifact
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       uses: actions/upload-artifact@v4
       with:
         name: povray_bundle_linux_intel
-        path: |
-          povray_bundle/bin
-          povray_bundle/share
+        path: ${{ env.ARTIFACT_NAME }}
 
 ###############################################
 
@@ -191,13 +217,12 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: artifacts
-        merge-multiple: false
+        merge-multiple: true
     - run: |
-        
         ls -lR
 
     - name: Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: my_files.tar.bz2
+        files: artifacts/*.tar.bz2
