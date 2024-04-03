@@ -32,9 +32,9 @@ jobs:
         path: |
           my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
 
-  build_macos_intel:
-    name: "MacOS intel gcc"
-    runs-on: ubuntu-22.04
+  build_macos_arm64:
+    name: "MacOS arm64 clang"
+    runs-on: macos-14
     steps:
     - name: Create file
       shell: bash
@@ -52,12 +52,12 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: test_file_macos_intel
+        name: test_file_macos_arm64
         path: |
           my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
 
   release_linux_intel:
-    needs: [build_linux_intel,build_macos_intel]
+    needs: [build_linux_intel,build_macos_arm64]
     runs-on: ubuntu-latest
     steps:
     - name: Download All Artifacts
