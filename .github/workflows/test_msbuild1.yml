@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Install prerequisite
       run: |
-        choco install wget
+        choco install -r wget
 
     - uses: actions/checkout@v4
 
@@ -21,9 +21,9 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Build povray
-      shell: cmd
+      shell: pwsh
       run: |
-        msbuild -version
+        powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1
         # msbuild project\HelloWorld\HelloWorld\HelloWorld.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
 
