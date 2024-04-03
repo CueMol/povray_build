@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release_linux_intel:
+  build_linux_intel:
     name: "Linux intel gcc"
     runs-on: ubuntu-22.04
     steps:
@@ -27,3 +27,13 @@ jobs:
         name: test_file_linux_intel
         path: |
           my_files.tar.bz2
+
+  release_linux_intel:
+    needs: build_linux_intel
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download All Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: my-artifact
+    - run: ls -lR
