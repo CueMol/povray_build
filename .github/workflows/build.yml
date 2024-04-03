@@ -3,7 +3,10 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - main_xxx
+    # tags:
+    #   - "v*.*.*"
+
 #  pull_request:
 #    types: [ready_for_review, synchronize]
 
