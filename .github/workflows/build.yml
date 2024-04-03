@@ -1,11 +1,11 @@
-name: Build
+name: Build and release
 
 on:
   push:
     branches:
-      - main_xxx
-    # tags:
-    #   - "v*.*.*"
+      - main
+    tags:
+      - "v*.*.*"
 
 #  pull_request:
 #    types: [ready_for_review, synchronize]
@@ -42,11 +42,15 @@ jobs:
     - name: Build povray
       shell: bash
       run: |
+        OUTPUT_DIR=${GITHUB_WORKSPACE}/povray
         cd ${GITHUB_WORKSPACE}
         bash macos/run_build_povray.sh $HOME
-        pwd
+        mkdir -p ${OUTPUT_DIR}/bin
+        mkdir -p ${OUTPUT_DIR}/include
         ls -la $HOME/povray_bundle
-        cp -r $HOME/povray_bundle ${GITHUB_WORKSPACE}
+        cp -v $HOME/povray_bundle/bin/* ${OUTPUT_DIR}/bin/
+        cp -v $HOME/povray_bundle/share/povray-*/include/* ${OUTPUT_DIR}/include
+        tar cjf povray_bundle.tar.bz2 povray
 
     - name: Check build
       shell: bash
@@ -61,8 +65,7 @@ jobs:
       with:
         name: povray_bundle_macos_intel
         path: |
-          povray_bundle/bin
-          povray_bundle/share
+          povray_bundle.tar.bz2
 
 ###############################################
 
@@ -173,3 +176,6 @@ jobs:
         path: |
           povray_bundle/bin
           povray_bundle/share
+
+###############################################
+
