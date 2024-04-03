@@ -1,11 +1,11 @@
 name: Build and release
 
-on:
-  push:
-    branches:
-      - main
-    tags:
-      - "v*.*.*"
+# on:
+#   push:
+#     branches:
+#       - main
+#     tags:
+#       - "v*.*.*"
 
 #  pull_request:
 #    types: [ready_for_review, synchronize]
@@ -179,3 +179,21 @@ jobs:
 
 ###############################################
 
+  release_build:
+    needs: [build_mac,build_mac_arm64,build_linux_intel]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download All Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+        merge-multiple: true
+    - run: |
+        tar xjf my_files.tar.bz2
+        ls -lR
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: my_files.tar.bz2

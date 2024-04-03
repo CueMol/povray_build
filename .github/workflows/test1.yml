@@ -1,11 +1,11 @@
 name: Release test 1
 
-# on:
-#   push:
-#     branches:
-#       - main
-#     tags:
-#       - "v*.*.*"
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
 
 jobs:
   build_linux_intel:
@@ -30,20 +30,42 @@ jobs:
         path: |
           my_files.tar.bz2
 
+  build_macos_intel:
+    name: "MacOS intel gcc"
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Create file
+      shell: bash
+      run: |
+        cd ${GITHUB_WORKSPACE}
+
+        mkdir test_dir
+        echo "YYY" > test_dir/test_file
+        chmod +x test_dir/test_file
+        tar cjf my_files.tar.bz2 test_dir
+        ls -alR
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: test_file_macos_intel
+        path: |
+          my_files.tar.bz2
+
   release_linux_intel:
-    needs: build_linux_intel
+    needs: [build_linux_intel,build_macos_intel]
     runs-on: ubuntu-latest
     steps:
     - name: Download All Artifacts
       uses: actions/download-artifact@v4
       with:
-        name: test_file_linux_intel
+        path: artifacts
+        merge-multiple: false
     - run: |
-        tar xjf my_files.tar.bz2
         ls -lR
 
-    - name: Release
-      uses: softprops/action-gh-release@v2
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: my_files.tar.bz2
+    # - name: Release
+    #   uses: softprops/action-gh-release@v2
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   with:
+    #     files: my_files.tar.bz2
