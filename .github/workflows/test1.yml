@@ -14,9 +14,12 @@ jobs:
       shell: bash
       run: |
         cd ${GITHUB_WORKSPACE}
-        echo "XXX" > test_file
+
+        mkdir test_dir
+        echo "XXX" > test_dir/test_file
         chmod +x test_file
-        tar cjvf my_files.tar.bz2 test_file
+        tar cjvf my_files.tar.bz2 test_dir
+        ls -alR
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
