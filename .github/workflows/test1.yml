@@ -15,12 +15,14 @@ jobs:
     - name: Create file
       shell: bash
       run: |
-        cd ${GITHUB_WORKSPACE}
+        ARTIFACT_NAME=my_files_${RUNNER_OS}_${RUNNER_ARCH}.tar.bz2
+        echo ARTIFACT_NAME: $ARTIFACT_NAME
 
+        cd ${GITHUB_WORKSPACE}
         mkdir test_dir
         echo "XXX" > test_dir/test_file
         chmod +x test_dir/test_file
-        tar cjf my_files.tar.bz2 test_dir
+        tar cjf $ARTIFACT_NAME test_dir
         ls -alR
 
     - name: Upload artifact
@@ -28,7 +30,7 @@ jobs:
       with:
         name: test_file_linux_intel
         path: |
-          my_files.tar.bz2
+          my_files_${runner.os}_${runner.arch}.tar.bz2
 
   build_macos_intel:
     name: "MacOS intel gcc"
@@ -37,12 +39,14 @@ jobs:
     - name: Create file
       shell: bash
       run: |
-        cd ${GITHUB_WORKSPACE}
+        ARTIFACT_NAME=my_files_${RUNNER_OS}_${RUNNER_ARCH}.tar.bz2
+        echo ARTIFACT_NAME: $ARTIFACT_NAME
 
+        cd ${GITHUB_WORKSPACE}
         mkdir test_dir
         echo "YYY" > test_dir/test_file
         chmod +x test_dir/test_file
-        tar cjf my_files.tar.bz2 test_dir
+        tar cjf $ARTIFACT_NAME test_dir
         ls -alR
 
     - name: Upload artifact
@@ -50,7 +54,7 @@ jobs:
       with:
         name: test_file_macos_intel
         path: |
-          my_files.tar.bz2
+          my_files_${runner.os}_${runner.arch}.tar.bz2
 
   release_linux_intel:
     needs: [build_linux_intel,build_macos_intel]
@@ -60,7 +64,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: artifacts
-        merge-multiple: false
+        merge-multiple: true
     - run: |
         ls -lR
 
