@@ -3,7 +3,7 @@ gal wget
 
 $BASEDIR = $args[0]
 Write-Host "BASEDIR=" $BASEDIR
-$TMPDIR = $BASEDIR/tmp
+$TMPDIR = "$BASEDIR\tmp"
 
 New-Item $TMPDIR -ItemType Directory -ErrorAction SilentlyContinue
 Set-Location -Path $TMPDIR
