@@ -1,0 +1,29 @@
+name: Build and release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_win_intel:
+    name: "Windows intel msvc"
+    runs-on: windows-latest
+
+    steps:
+    - name: Install prerequisite
+      run: |
+        choco install wget
+
+    - uses: actions/checkout@v4
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build povray
+      shell: cmd
+      run: |
+        msbuild -version
+        # msbuild project\HelloWorld\HelloWorld\HelloWorld.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+
+
