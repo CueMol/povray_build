@@ -11,10 +11,10 @@ jobs:
   build_linux_intel:
     name: "Linux intel gcc"
     runs-on: ubuntu-22.04
-    env:
-      ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
     steps:
     - name: Create file
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       shell: bash
       run: |
         echo ARTIFACT_NAME: ${{ env.ARTIFACT_NAME }}
@@ -27,6 +27,8 @@ jobs:
         ls -alR
 
     - name: Upload artifact
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       uses: actions/upload-artifact@v4
       with:
         name: test_file_linux_intel
@@ -36,10 +38,10 @@ jobs:
   build_macos_arm64:
     name: "MacOS arm64 clang"
     runs-on: macos-14
-    env:
-      ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
     steps:
     - name: Create file
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       shell: bash
       run: |
         echo ARTIFACT_NAME: ${{ env.ARTIFACT_NAME }}
@@ -52,6 +54,8 @@ jobs:
         ls -alR
 
     - name: Upload artifact
+      env:
+        ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       uses: actions/upload-artifact@v4
       with:
         name: test_file_macos_arm64
