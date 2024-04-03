@@ -18,7 +18,7 @@ jobs:
         mkdir test_dir
         echo "XXX" > test_dir/test_file
         chmod +x test_dir/test_file
-        tar cjvf my_files.tar.bz2 test_dir
+        tar cjf my_files.tar.bz2 test_dir
         ls -alR
 
     - name: Upload artifact
@@ -36,4 +36,6 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: test_file_linux_intel
-    - run: ls -lR
+    - run: |
+        tar xjf my_files.tar.bz2
+        ls -lR
