@@ -11,18 +11,19 @@ jobs:
   build_linux_intel:
     name: "Linux intel gcc"
     runs-on: ubuntu-22.04
+    env:
+      ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
     steps:
     - name: Create file
       shell: bash
       run: |
-        ARTIFACT_NAME=my_files_${RUNNER_OS}_${RUNNER_ARCH}.tar.bz2
-        echo ARTIFACT_NAME: $ARTIFACT_NAME
+        echo ARTIFACT_NAME: ${{ env.ARTIFACT_NAME }}
 
         cd ${GITHUB_WORKSPACE}
         mkdir test_dir
         echo "XXX" > test_dir/test_file
         chmod +x test_dir/test_file
-        tar cjf $ARTIFACT_NAME test_dir
+        tar cjf ${{ env.ARTIFACT_NAME }} test_dir
         ls -alR
 
     - name: Upload artifact
@@ -30,23 +31,24 @@ jobs:
       with:
         name: test_file_linux_intel
         path: |
-          my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+          ${{ env.ARTIFACT_NAME }}
 
   build_macos_arm64:
     name: "MacOS arm64 clang"
     runs-on: macos-14
+    env:
+      ARTIFACT_NAME: my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
     steps:
     - name: Create file
       shell: bash
       run: |
-        ARTIFACT_NAME=my_files_${RUNNER_OS}_${RUNNER_ARCH}.tar.bz2
-        echo ARTIFACT_NAME: $ARTIFACT_NAME
+        echo ARTIFACT_NAME: ${{ env.ARTIFACT_NAME }}
 
         cd ${GITHUB_WORKSPACE}
         mkdir test_dir
         echo "YYY" > test_dir/test_file
         chmod +x test_dir/test_file
-        tar cjf $ARTIFACT_NAME test_dir
+        tar cjf ${{ env.ARTIFACT_NAME }} test_dir
         ls -alR
 
     - name: Upload artifact
@@ -54,7 +56,7 @@ jobs:
       with:
         name: test_file_macos_arm64
         path: |
-          my_files_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+          ${{ env.ARTIFACT_NAME }}
 
   release_all:
     needs: [build_linux_intel,build_macos_arm64]
