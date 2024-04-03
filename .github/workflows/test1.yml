@@ -26,4 +26,4 @@ jobs:
       with:
         name: test_file_linux_intel
         path: |
-          test_file_linux_intel.tar.bz2
+          my_files.tar.bz2
