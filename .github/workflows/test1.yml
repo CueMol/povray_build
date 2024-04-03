@@ -35,5 +35,5 @@ jobs:
     - name: Download All Artifacts
       uses: actions/download-artifact@v4
       with:
-        name: my-artifact
+        name: test_file_linux_intel
     - run: ls -lR
