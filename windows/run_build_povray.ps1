@@ -1,13 +1,12 @@
 $BASEDIR = $args[0]
-Write-Host $BASEDIR
+Write-Host "BASEDIR=" $BASEDIR
 msbuild -version
 
 sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
 gal wget
 
 # get source
-wget --progress=dot:mega -c --content-disposition \
-     https://github.com/POV-Ray/povray/archive/refs/tags/v3.7.0.10.tar.gz
+wget --progress=dot:mega -c --content-disposition https://github.com/POV-Ray/povray/archive/refs/tags/v3.7.0.10.tar.gz
 
 <#
 TMPDIR=$BASEDIR/tmp

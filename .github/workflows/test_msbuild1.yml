@@ -23,6 +23,7 @@ jobs:
     - name: Build povray
       shell: pwsh
       run: |
+        Get-ChildItem env:
         powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1
         # msbuild project\HelloWorld\HelloWorld\HelloWorld.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
