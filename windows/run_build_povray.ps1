@@ -38,6 +38,7 @@ msbuild windows\vs10\openexr_eLut.vcxproj /t:rebuild /p:Configuration=Release /p
 msbuild windows\vs10\tiff.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 
+Get-ChildItem ./windows/vs10/bin64/
 New-Item $TARGETDIR/povray/bin -ItemType Directory -ErrorAction SilentlyContinue
-Copy-Item windows\vs10\bin*\*.exe $TARGETDIR/povray/bin/
+Copy-Item windows/vs10/bin64/*.exe $TARGETDIR/povray/bin/
 Set-Location -Path $TARGETDIR
