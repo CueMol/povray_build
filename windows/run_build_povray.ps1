@@ -16,6 +16,7 @@ Set-Location -Path ./povray-3.7.0.10
 # Get-ChildItem ./
 (Get-Content source\backend\povray.h).replace('FILL IN NAME HERE.........................', 'CueMol') | Set-Content source\backend\povray.h
 (Get-Content source\backend\povray.h).replace('#error Please complete the following DISTRIBUTION_MESSAGE_2 definition', '') | Set-Content source\backend\povray.h
+(Get-Content vfe/win/syspovconfig.h).replace('// #define _CONSOLE', '#define _CONSOLE') | Set-Content vfe/win/syspovconfig.h
 
 msbuild windows\vs10\openexr_toFloat.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 msbuild windows\vs10\openexr_eLut.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
