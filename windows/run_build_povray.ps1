@@ -15,8 +15,9 @@ tar xzf povray-3.7.0.10.tar.gz
 Set-Location -Path ./povray-3.7.0.10
 # Get-ChildItem ./
 
-msbuild windows\vs10\openexr_toFloat.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142
-msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142
+msbuild windows\vs10\openexr_toFloat.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
+msbuild windows\vs10\openexr_eLut.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
+msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 
 <#
 
