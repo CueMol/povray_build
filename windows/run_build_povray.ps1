@@ -1,5 +1,5 @@
 sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
-gal wget
+# gal wget
 
 $BASEDIR = $args[0]
 $TARGETDIR = $args[1]
@@ -19,10 +19,6 @@ Set-Location -Path ./povray-3.7.0.10
 New-Item $TARGETDIR/povray -ItemType Directory -ErrorAction SilentlyContinue
 Copy-Item -Recurse "distribution/include" "$TARGETDIR/povray"
 
-New-Item $TARGETDIR/povray/bin -ItemType Directory -ErrorAction SilentlyContinue
-Set-Location -Path $TARGETDIR
-
-<#
 # Get-ChildItem ./
 (Get-Content source\backend\povray.h).replace('FILL IN NAME HERE.........................', 'CueMol') | Set-Content source\backend\povray.h
 (Get-Content source\backend\povray.h).replace('#error Please complete the following DISTRIBUTION_MESSAGE_2 definition', '') | Set-Content source\backend\povray.h
@@ -41,4 +37,7 @@ msbuild windows\vs10\openexr_toFloat.vcxproj /t:rebuild /p:Configuration=Release
 msbuild windows\vs10\openexr_eLut.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 msbuild windows\vs10\tiff.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
-#>
+
+New-Item $TARGETDIR/povray/bin -ItemType Directory -ErrorAction SilentlyContinue
+Copy-Item windows\vs10\bin*\*.exe $TARGETDIR/povray/bin/
+Set-Location -Path $TARGETDIR
