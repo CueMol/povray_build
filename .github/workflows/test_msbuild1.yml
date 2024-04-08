@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_win_intel:
+  build_win64_intel:
     name: "Windows intel msvc"
     runs-on: windows-2019
 
@@ -22,9 +22,20 @@ jobs:
 
     - name: Build povray
       shell: pwsh
+      run: |
+        powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP $env:GITHUB_WORKSPACE
+
+    - name: Create bundle
+      shell: pwsh
       env:
         ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       run: |
-        Get-ChildItem env:
-        powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP $env:GITHUB_WORKSPACE
         tar cjvf ${{ env.ARTIFACT_NAME }} povray
+
+    - name: Upload artifact
+      env:
+        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+      uses: actions/upload-artifact@v4
+      with:
+        name: povray_bundle_win64_intel
+        path: ${{ env.ARTIFACT_NAME }}
