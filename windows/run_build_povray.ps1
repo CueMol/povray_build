@@ -2,7 +2,9 @@ sal wget (Join-Path $env:ChocolateyInstall "bin\wget.exe") -O AllScope
 gal wget
 
 $BASEDIR = $args[0]
+$TARGETDIR = $args[1]
 Write-Host "BASEDIR=" $BASEDIR
+Write-Host "TARGETDIR=" $TARGETDIR
 $TMPDIR = "$BASEDIR\tmp"
 
 New-Item $TMPDIR -ItemType Directory -ErrorAction SilentlyContinue
@@ -13,6 +15,14 @@ wget --progress=dot:mega -c --content-disposition https://github.com/POV-Ray/pov
 
 tar xzf povray-3.7.0.10.tar.gz
 Set-Location -Path ./povray-3.7.0.10
+
+New-Item $TARGETDIR/povray -ItemType Directory -ErrorAction SilentlyContinue
+Copy-Item -Recurse "distribution/include" "$TARGETDIR/povray"
+
+New-Item $TARGETDIR/povray/bin -ItemType Directory -ErrorAction SilentlyContinue
+Set-Location -Path $TARGETDIR
+
+<#
 # Get-ChildItem ./
 (Get-Content source\backend\povray.h).replace('FILL IN NAME HERE.........................', 'CueMol') | Set-Content source\backend\povray.h
 (Get-Content source\backend\povray.h).replace('#error Please complete the following DISTRIBUTION_MESSAGE_2 definition', '') | Set-Content source\backend\povray.h
@@ -31,34 +41,4 @@ msbuild windows\vs10\openexr_toFloat.vcxproj /t:rebuild /p:Configuration=Release
 msbuild windows\vs10\openexr_eLut.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 msbuild windows\vs10\tiff.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
 msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v142 /p:Platform=x64
-
-<#
-
-mkdir -p $TMPDIR
-cd $TMPDIR
-
-tar xzf povray-3.7.0.10.tar.gz
-cd povray-3.7.0.10
-
-cd unix/
-./prebuild.sh
-cd ../
-
-instpath=$BASEDIR/povray_bundle
-
-./configure \
-    NON_REDISTRIBUTABLE_BUILD=yes \
-    COMPILED_BY="your name <email@address>" \
-    --prefix=$instpath \
-    --with-boost=$BASEDIR/povray_bundle/boost_1_76_static \
-    --with-libpng=$BASEDIR/povray_bundle/libpng12/lib \
-    --without-x \
-    --without-openexr \
-    --without-libmkl \
-    --without-libsdl \
-    --without-libjpeg \
-    --without-libtiff
-
-env MACOSX_DEPLOYMENT_TARGET=10.15 make -j 8
-make install
 #>

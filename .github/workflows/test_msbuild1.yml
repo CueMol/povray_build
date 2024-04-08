@@ -22,9 +22,9 @@ jobs:
 
     - name: Build povray
       shell: pwsh
+      env:
+        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       run: |
         Get-ChildItem env:
-        powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP
-        # msbuild project\HelloWorld\HelloWorld\HelloWorld.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-
-
+        powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP $env:GITHUB_WORKSPACE
+        tar cjvf ${{ env.ARTIFACT_NAME }} povray
