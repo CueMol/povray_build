@@ -26,7 +26,7 @@ jobs:
         powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP $env:GITHUB_WORKSPACE
 
     - name: Create bundle
-      shell: pwsh
+      shell: bash
       env:
         ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
       run: |

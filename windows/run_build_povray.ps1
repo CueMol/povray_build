@@ -41,4 +41,5 @@ msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:Plat
 Get-ChildItem ./windows/vs10/bin64/
 New-Item $TARGETDIR/povray/bin -ItemType Directory -ErrorAction SilentlyContinue
 Copy-Item windows/vs10/bin64/*.exe $TARGETDIR/povray/bin/
+Get-ChildItem $TARGETDIR/povray/bin/
 Set-Location -Path $TARGETDIR
