@@ -8,7 +8,7 @@ on:
 jobs:
   build_win_intel:
     name: "Windows intel msvc"
-    runs-on: windows-latest
+    runs-on: windows-2016
 
     steps:
     - name: Install prerequisite

@@ -13,9 +13,9 @@ wget --progress=dot:mega -c --content-disposition https://github.com/POV-Ray/pov
 
 tar xzf povray-3.7.0.10.tar.gz
 Set-Location -Path ./povray-3.7.0.10
-Get-ChildItem ./
+# Get-ChildItem ./
 
-msbuild -version
+msbuild windows\vs10\console.vcxproj /t:rebuild /p:Configuration=Release /p:PlatformToolset=v140
 
 <#
 
