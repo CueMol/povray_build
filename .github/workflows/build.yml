@@ -247,7 +247,7 @@ jobs:
 ###############################################
 
   release_build:
-    needs: [build_mac,build_mac_arm64,build_linux_intel,build_win_x64]
+    needs: [build_mac,build_mac_arm64,build_linux_x64,build_win_x64]
     runs-on: ubuntu-latest
     steps:
     - name: Download All Artifacts
