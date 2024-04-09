@@ -1,41 +1,41 @@
-name: Build and release
+# name: Build and release
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build_win64_intel:
-    name: "Windows intel msvc"
-    runs-on: windows-2019
+# jobs:
+#   build_win_x64:
+#     name: "Windows intel msvc"
+#     runs-on: windows-2019
 
-    steps:
-    - name: Install prerequisite
-      run: |
-        choco install -r wget
+#     steps:
+#     - name: Install prerequisite
+#       run: |
+#         choco install -r wget
 
-    - uses: actions/checkout@v4
+#     - uses: actions/checkout@v4
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+#     - name: Add MSBuild to PATH
+#       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build povray
-      shell: pwsh
-      run: |
-        powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP $env:GITHUB_WORKSPACE
+#     - name: Build povray
+#       shell: pwsh
+#       run: |
+#         powershell -NoProfile -ExecutionPolicy Unrestricted ./windows/run_build_povray.ps1 $env:TEMP $env:GITHUB_WORKSPACE
 
-    - name: Create bundle
-      shell: bash
-      env:
-        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
-      run: |
-        tar cjvf ${{ env.ARTIFACT_NAME }} povray
+#     - name: Create bundle
+#       shell: bash
+#       env:
+#         ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+#       run: |
+#         tar cjvf ${{ env.ARTIFACT_NAME }} povray
 
-    - name: Upload artifact
-      env:
-        ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
-      uses: actions/upload-artifact@v4
-      with:
-        name: povray_bundle_win64_intel
-        path: ${{ env.ARTIFACT_NAME }}
+#     - name: Upload artifact
+#       env:
+#         ARTIFACT_NAME: povray_${{ runner.os }}_${{ runner.arch }}.tar.bz2
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: povray_bundle_win64_intel
+#         path: ${{ env.ARTIFACT_NAME }}
